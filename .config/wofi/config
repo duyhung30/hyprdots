@@ -1,0 +1,7 @@
+mode=drun
+monitor=eDP-1
+location=top-left
+xoffset=735px
+yoffset=280px
+width=400px
+height=420px

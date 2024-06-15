@@ -1,0 +1,113 @@
+{
+    "margin-top": 0,
+    "margin-bottom": -8,
+    "margin-left": 0,
+    "margin-right": 0,
+    "layer": "top",
+    //"margin-top": -7,
+    //"margin-bottom": -3,
+    //"position": "bottom",
+    "modules-left": [
+        "custom/menu",
+        "clock"
+    ],
+    "modules-center": [
+        "hyprland/workspaces"
+    ],
+    "modules-right": [
+        "tray",
+        "custom/local_ip",
+        "network",
+        "pulseaudio",
+        "backlight",
+        "battery"
+    ],
+    "hyprland/workspaces": {
+        "sort-by-number": true,
+        "on-click": "activate",
+        "on-scroll-up": "hyprctl dispatch workspace -1",
+        "on-scroll-down": "hyprctl dispatch workspace +1",
+        "format": "{icon}",
+        "format-icons": {
+          "active": " 󰮯",
+        "default": "",
+        },
+        "persistent_workspaces": {
+            "1": [],
+            "2": [],
+            "3": [],
+            "4": [],
+            "5": [],
+            "6": [],
+            "7": [],
+            "8": [],
+            "9": []
+        }
+    },
+    "custom/menu": {
+        "format": ""
+    },
+    "battery": {
+        "tooltip-format": "{capacity}%",
+        "on-click":"eww open top_right && eww update 'bigmenu'=true",
+        "interval": 60,
+        "states": {
+            "warning": 35,
+            "critical": 20,
+            "fully": 100
+        },
+        "format": "{icon} ",
+        //"format-icons": [
+        //   "",
+        //   "",
+        //   "",
+        //   "",
+        //   ""
+       // ]
+             "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+
+    },
+    "clock": {
+        "interval": 1,
+        "format": "{:%a %d %b %Y ǀ %H:%M:%OS}",
+        "tooltip": true,
+        "on-click": "eww open top_left && eww update 'calendar_hover'=true"
+    },
+    "tray": {
+        "icon-size": 15,
+        "spacing": 10
+    },
+    "network": {
+        /* "format-wifi": "直", */
+        "format-wifi": "{icon}",
+        "format-ethernet": " ",
+        "format-disconnected": "睊",
+        "tooltip-format": "{essid}",
+        "on-click": "wezterm -e nmtui",
+        "format-icons": ["󰤯","󰤟","󰤢","󰤥","󰤨"],
+    },
+     "pulseaudio": {
+        "format": "{icon}",
+        "format-muted": "婢",
+        "format-icons": {
+            "default": ["", "", "墳"]
+        },
+        "tooltip-format": "{volume}%",
+        "on-click": "pavucontrol &"
+       },
+
+    "backlight": {
+        "device": "eDP-1",
+        "format": "{icon}",
+        "tooltip-format": "{percent}%",
+        "format-icons": ["󱩎", "󱩏", "󱩐", "󱩑", "󱩒", "󱩓", "󱩔", "󱩕", "󱩖", "󰛨"],
+        /*"on-click":"eww open top_right && eww update 'bigmenu'=true", */
+    },
+        "custom/local_ip": {
+            "exec": "/home/duyhung/.config/waybar/scripts/local_ip.py",
+            "interval": 1,
+            "return-type": "json",
+            "format": "{}",
+            "format-icons": false
+        }
+}

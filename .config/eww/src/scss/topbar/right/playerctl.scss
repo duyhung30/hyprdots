@@ -1,0 +1,122 @@
+// for the music popup
+
+$base: #161616; 
+$surface0: #262626; 
+$surface1: #393939; 
+$surface2: #525252; 
+$white0: #dde1e6; 
+$white1: #f2f4f8; 
+$white2: #ffffff; 
+$teal: #08bdba;
+$sapphire: #3ddbd9; 
+$sky: #78a9ff; 
+$maroon: #ee5396; 
+$blue: #33b1ff; 
+$red: #ff7eb6; 
+$green: #42be65; 
+$lavender: #be95ff; 
+$light_blue: #82cfff;
+.icon {
+    font-size: 20px;
+    min-width: 1em; 
+    min-height: 1em;
+    font-family: "Symbols Nerd Font";
+    padding: 0px 2px;
+}
+
+.mpd_controls label {
+    font-size: 30px;
+    padding: 0px;
+}
+
+.seektime {
+    trough {
+        min-height: 10px; 
+        min-width: 180px;
+
+        slider {
+            background-color: $white2;
+            border-radius: 25px;
+            min-height: 20px;
+            min-width: 20px;
+            margin: -10px;
+        }
+
+        highlight {
+            background-color: $red;
+        }
+    }
+}
+
+.sidempdctl {
+    margin: 5px; 
+    label {
+        font-size: 30px;
+        padding-right: 5px;
+        min-height: 1em;
+        min-width: 1em;
+    }
+}
+
+.mpdvolumeseek {
+    @extend .seektime;
+    trough {
+        min-height: 100px; 
+        min-width: 10px;
+        highlight {
+            background-color: $white0;
+        }
+    }
+}
+
+.mtitle {
+    color: $white0;
+    font-size: 20px; 
+    margin-top: 30px;
+}
+
+.sliderctl {
+    @extend .seektime;
+    trough {
+        min-height: 10px;
+        min-width: 200px;
+    }
+}
+
+.cavascale {
+    all: unset; 
+    trough {
+        all: unset; 
+        border-radius: 24px;
+        min-height: 18px;
+        min-width: 5px;
+        margin: 1px;
+        highlight {
+            background-color: $white0;
+            border-radius: 24px;
+        }
+        slider {
+            all:unset;
+        }
+    }
+}
+
+.icontitle {
+    @extend .title; 
+    min-width: 1em;
+    min-height: 1em;
+    font-family: "Symbols Nerd font";
+}
+
+.icontitlesel {
+    @extend .titlesel; 
+    min-width: 1em;
+    min-height: 1em;
+    font-family: "Symbols Nerd font";
+}
+
+.launchicon {
+    @extend .icon;
+    color: $red;
+}
+

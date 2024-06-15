@@ -1,0 +1,30 @@
+.workspacesWidget {
+    border-radius: $outer_border-radius;
+    margin: 6px 0;
+    transition: 0.25s;
+    background-color: $base01;
+    padding: 0 5px;
+
+    .workspacesBox {
+        transition: 250ms;
+        border-radius: $inner_border-radius;
+        margin: 4px 3px;
+
+    }
+    
+    .activeWorkspace {
+        padding: 0 20px;
+        background-color: $baseA0;
+    }
+
+    .inactiveWorkspace {
+        padding: 0 8px;
+        background-color: $base03;
+    }
+
+    .emptyWorkspace {
+        padding: 0 8px;
+        background-color: $base02;
+    }
+
+}

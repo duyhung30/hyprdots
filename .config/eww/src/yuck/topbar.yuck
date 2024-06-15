@@ -1,0 +1,86 @@
+; ; Include left modules for topbar
+(include "./src/yuck/topbar/left/time_module.yuck")
+(include "./src/yuck/topbar/left/layout.yuck")
+; ; Include center modules for topbar
+(include "./src/yuck/topbar/center/workspaces.yuck")
+; ; Include right modules for topbar
+(include "./src/yuck/topbar/right/quicksettings.yuck")
+(include "./src/yuck/topbar/right/local_ip.yuck")
+(include "./src/yuck/topbar/right/notifbutton.yuck")
+(include "./src/yuck/topbar/right/tray.yuck")
+(include "./src/yuck/topbar/right/media_player.yuck")
+(include "./src/yuck/topbar/right/playerctl.yuck")
+; ; Topbar with modules, left, center and right, like waybar modules
+
+(defwindow topbar
+  :monitor 0
+  :stacking "fg"
+  :windowtype "dock"
+  :class "topbar_window"
+  :reserve (struts :distance "50px" :side "top")
+  :namespace "eww"
+  :exclusive true
+  
+  :geometry (geometry
+    :x "0%"
+    :y "0%"
+    :width "100%"
+    :height "10px"
+    :anchor "top center"
+  )
+  
+  (eventbox
+    :cursor "default"
+    
+    (centerbox
+      :class "topbar_box"
+      :orientation "h"
+      
+      (left_module)
+      (center_module)
+      (right_module)
+    )
+  )
+)
+
+(defwidget left_module []
+  (box
+    :class "left_module_box module"
+    :space-evenly false
+    :orientation "h"
+    :halign "start"
+    :spacing 10
+    ;; (layout_widget)
+    ;; (time_module)
+    (workspaces)
+    (weather_module)
+    ; ; ; Just added this to mantain the windows variable updating over the time
+    (label :text windows :visible false)
+  )
+)
+
+(defwidget center_module []
+  (box
+    :class "center_module_box module"
+    :space-evenly false
+    :halign "center"
+    
+    ;; (workspaces)
+    (time_module)
+  )
+)
+(defwidget right_module []
+  (box
+    :class "right_module_box module"
+    :space-evenly false
+    :halign "end"
+    (local_ip)
+    (media_playerSmall)
+    ;; (media_playerBig)
+    ;; (tray)
+    ;; (playerctl)
+    (quicksettings)
+    ;; (notifButton)
+    
+  )
+)

@@ -1,0 +1,79 @@
+; Main widget that contains quicksettings
+(defwidget quicksettings []
+  (box
+    :class "quicksettingsBox"
+    
+    (eventbox
+      :class "quicksettingsEventbox"
+      :onclick "eww open dashboardWindow_right --toggle & ./scripts/notifManage --reload &"
+      :cursor "pointer"
+      (box
+        :space-evenly false
+        :spacing 15
+        :class "quicksettingsChildBox"
+        
+        (eventbox
+          :class "Eventbox"
+          :onrightclick "${EWW_CMD} open wifi_menu --toggle"
+          (label
+            :class "icon wifiIcon"
+            :tooltip {wifiInfo.name}
+            :text {wifiInfo.icon}
+          )
+        )
+        
+        (eventbox
+          :class "Eventbox"
+          :onscroll "./scripts/volume --{}"
+          
+          (label
+            :class "icon volumeIcon"
+            :tooltip {volume.value}
+            :text {volume.icon}
+          )
+        )
+        (eventbox
+          :class "Eventbox"
+          :onscroll "./scripts/microphone --{}"
+          :visible {microphone.icon == ""}
+          :active {microphone.icon == ""}
+          (label
+            :class "icon micIcon"
+            :text {microphone.icon}
+            :tooltip {microphone.value}
+          ))
+        
+        (box
+          :space-evenly false
+          (eventbox
+            :class "Eventbox"
+            :onscroll "./scripts/brightness --{}"
+            (label
+              :class "icon ${
+              EWW_BATTERY.BAT0.status == 'Full' ? 'charging' :
+              EWW_BATTERY.BAT0.status == 'Charging' ? 'charging' :
+              EWW_BATTERY.BAT0.capacity <= 15 ? 'critical' :
+              EWW_BATTERY.BAT0.capacity <= 20 ? 'low' :
+              EWW_BATTERY.BAT0.capacity <= 40 ? 'normal' :
+              EWW_BATTERY.BAT0.status}"
+              :text {
+              EWW_BATTERY.BAT0.status == "Full" ||  EWW_BATTERY.BAT0.status == "Charging" ? "󰂄" :
+              EWW_BATTERY.BAT0.capacity >= 80 ? "󰁹" :
+              EWW_BATTERY.BAT0.capacity >= 65 ? "󰂂" :
+              EWW_BATTERY.BAT0.capacity >= 50 ? "󰂁" :
+              EWW_BATTERY.BAT0.capacity >= 45 ? "󰂀" :
+              EWW_BATTERY.BAT0.capacity >= 30 ? "󰁾" :
+              EWW_BATTERY.BAT0.capacity >= 25 ? "󰁽" :
+              EWW_BATTERY.BAT0.capacity >= 20 ? "󰁼" :
+              EWW_BATTERY.BAT0.capacity >= 15 ? "󰁻" :
+              EWW_BATTERY.BAT0.capacity >= 10 ? "󰂎" :
+              "󰂎"
+              }
+              :tooltip "${EWW_BATTERY.BAT0.status} ${EWW_BATTERY.BAT0.capacity}%"
+            )
+          )
+        )
+      )
+    )
+  )
+)

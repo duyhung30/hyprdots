@@ -1,0 +1,100 @@
+// Style for the popup
+
+.icon.zeronotifIcon {
+  color: $base01;
+  font-size: 100px;
+}
+
+.zeronotifLabel {
+  color: $base02;
+  padding-left: 10px;
+}
+
+.Box_Spotify {
+  border-left: 5px solid $base0D;
+}
+
+.Box_VencordDesktop,
+.Box_discord {
+  border-left: 5px solid $base0B;
+}
+
+.notifBox {
+  background: $base00;
+  padding: 15px;
+  border-radius: 10px;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+
+
+  .titlebar {
+    color: $base02;
+  }
+
+  .title {
+    color: $base04;
+  }
+
+  .content {
+    color: $base03;
+    font-family: "IBM Plex Sans Mono";
+  
+}
+
+  .icon {
+    color: $base03;
+  }
+
+  .VencordDesktop,
+  .discord {
+    color: $base0B;
+  }
+  .Spotify {
+    color: $base0D;
+  }
+
+  .Firefox {
+    color: orange;
+  }
+
+  .smallImage,
+  .bigImage {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: $outer_border-radius;
+  }
+
+  .smallImage {
+    min-width: 60px;
+    min-height: 60px;
+  }
+
+  .bigImage {
+    min-width: 290px;
+    min-height: 150px;
+    border: 1px solid $base01;
+  }
+
+  .button {
+    background: $base01;
+    color: $base03;
+    padding: 5px 10px;
+    border-radius: 10px;
+
+    .icon {
+      color: $base00;
+      transition: 250ms;
+    }
+  }
+  .button {
+    background: $base01;
+    color: $base03;
+    padding: 5px 50px;
+    border-radius: 10px;
+    transition: 250ms;
+  }
+
+  .button:hover {
+    background: $base02;
+  }
+}

@@ -1,0 +1,56 @@
+
+(defwidget aboutme []
+  (box
+    :space-evenly false
+    :class "aboutmeBox"
+    :hexpand true
+    :spacing 10
+    
+    (box
+      :class "pfpImage"
+      :width 55
+      :height 55
+    )
+    
+    (box
+      :class "divisor"
+      :vexpand true
+    )
+    
+    (box
+      :space-evenly false
+      :spacing 5
+      :orientation "v"
+      :valign "center"
+      :hexpand true
+      
+      (label
+        :halign "start"
+        :text user
+        :class "username"
+      )
+      (label
+        :halign "start"
+        :text host
+        :class "hostname"
+      )
+    )
+    
+    (box
+      :space-evenly false
+      :orientation "v"
+      :spacing 5
+      :valign "center"
+      
+      (button
+        :class "logoutButton"
+        :onclick "hyprctl dispatch exit"
+        (label
+          :text "󰍃"
+          :class "icon"
+        )
+      )
+    )
+  )
+)
+

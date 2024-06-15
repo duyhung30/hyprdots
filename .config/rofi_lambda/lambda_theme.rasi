@@ -1,0 +1,47 @@
+* {
+    background-color:            transparent;
+}
+
+mainbox {
+    padding: 0px;
+}
+
+window {
+    border: 4;
+    padding: 0;
+    border-color: #262026;
+    background-color: #1e191e;
+}
+
+listview {
+    lines: 0;
+}
+
+inputbar {
+    padding:    5px 10px;
+    spacing:    0px ;
+    children:   ["textbox-prompt-colon","entry", "icon-current-entry", "case-indicator"];
+}
+
+icon-current-entry {
+  size: 30px;
+}
+
+entry {
+    text-color:        #dbd7d2;
+    cursor:            text;
+    spacing:           0;
+    placeholder-color: Gray;
+    placeholder:       "何を探してですか？";
+}
+
+prompt {
+    text-color: #dbd7d2;
+}
+
+textbox-prompt-colon {
+    margin:     0px 0px ;
+    expand:     false;
+    str:        "  │ ";
+    text-color: #dbd7d2;
+}

@@ -1,0 +1,24 @@
+.topbar_box {
+  padding: 0 12px;
+  background-color: $base00;
+}
+
+.module {
+  label {
+    // font-family: "JetBrainsMono Nerd Font", "Tilt Neon", monospace;
+    font-family: "Maple Mono NF";
+    font-size: 15px;
+  }
+
+  label.icon {
+    font-family: "Symbols Nerd Font";
+    font-size: 20px;
+}
+}
+
+.tray_icon {
+  background-color: $base01;
+  border-radius: $outer_border-radius;
+  margin: 10px 5px;
+  padding: 0 10px;
+}

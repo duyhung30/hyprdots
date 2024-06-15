@@ -1,0 +1,122 @@
+(defwindow windowSwitcher
+  :geometry (geometry
+    :width "90%"
+    :height "35%"
+    :anchor "top center"
+    :y "20%"
+  )
+  
+  :monitor 0
+  :windowtype "dock"
+  :stacking "fg"
+  
+  (eventbox
+    :onhoverlost "eww close windowSwitcher"
+    (box
+      :space-evenly false
+      :spacing 20
+      :class "windowEventBoxes"
+      :orientation "v"
+      
+      (box
+        :space-evenly false
+        :spacing 20
+        :halign "center"
+        :valign "center"
+        (for i in {[0, 1, 2, 3]}
+          (box
+            :class "windowsContainers"
+            :space-evenly false
+            :height {1080/5}
+            :width {1920/5}
+            
+            (for j in {windows[i].windows}
+              
+              (windowWorkspace
+                :id {j.window_id}
+                :icon {j.window_icon}
+                :name {j.window_name}
+                :focused {j.focused}
+                :floating {j.floating}
+                :atX {j.at[0]}
+                :atY {j.at[1]}
+                :X {j.size[0]}
+                :Y {j.size[1]}
+              )
+            )
+          )
+        )
+      )
+      (box
+        :space-evenly false
+        :spacing 20
+        :halign "center"
+        :valign "center"
+        (for k in {[4, 5, 6]}
+          (box
+            :class "windowsContainers"
+            :space-evenly false
+            :height {1080/5}
+            :width {1920/5}
+            
+            (for l in {windows[k].windows}
+              
+              (windowWorkspace
+                :id {l.window_id}
+                :icon {l.window_icon}
+                :name {l.window_name}
+                :focused {l.focused}
+                :floating {l.floating}
+                :atX {l.at[0]}
+                :atY {l.at[1]}
+                :X {l.size[0]}
+                :Y {l.size[1]}
+              )
+            )
+          )
+        )
+      )
+    )
+  )
+)
+
+(defwidget windowWorkspace [id ?name icon X Y atX atY ?floating focused]
+  (box
+    :style "
+    margin-left: ${round(atX /5, 0)}px;
+    margin-top: ${round((atY ) /5, 0)}px;
+    margin-right: -${round((atX + X) /5,0)}px;
+    margin-bottom: ${round(1080 /5 - (((atY) + Y) /5), 0)}px;
+    "
+    
+    (eventbox
+      :cursor "pointer"
+      :class "workspaceWindowEventbox"
+      :onclick "./scripts/hypr_setWorkspace --setnode ${id}"
+      (overlay
+        (box
+          :class "workspaceWindowsBox ${floating ? 'Floating' : ''} "
+          (image
+            :path icon
+            :image-width {round(X / 5 * 45 / 100, 0)}
+            :image-height {round(Y / 5 * 45 / 100, 0)}
+            :class "windowIcon"
+            :tooltip name
+            :valign "center"
+            :halign "center"
+          )
+        )
+        (box
+          :halign "end"
+          :valign "start"
+          :space-evenly false
+          :visible {!floating}
+          :style "margin-right: 5px; margin-top: 0.5px"
+          (for i in {[1, 2, 3]}
+            (label :text "" :class "windowButton icon windowButton_${i}" :yalign 0)
+          )
+        )
+      )
+    )
+  )
+)

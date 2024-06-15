@@ -1,0 +1,100 @@
+// scheme: "#Oxocarbon\ Dark";
+// author: "#shaunsingh/IBM";
+
+$base00: #161616;
+$base01: #232323;
+$base02: #393939;
+$base03: #525252;
+$Altbase03: #8F9091;
+$base04: #dde1e6;
+$base05: #f2f4f8;
+$base06: #ffffff;
+$base07: #08bdba;
+$base08: #3ddbd9;
+$base09: #78a9ff;
+$base0A: #ee5396;
+$base0B: #33b1ff;
+$base0C: #ff7eb6;
+$base0D: #43b365;
+$base0E: #be95ff;
+$base0F: #82cfff;
+
+$baseA0: #6791da;
+// $baseA0: #846493;
+
+
+
+
+
+$AltbaseA0: #6791da;
+
+$shadow00: 5px 5px 2px rgb(0, 0, 0, 0.4);
+$outer_border-radius: 6px;
+$inner_border-radius: 4px;
+
+$button_icon: 5px 16px 5px 10px;
+
+* {
+  all: unset;
+  // font-family: "Iosevka Nerd Font", "Tilt Neon", monospace;
+  // font-family: "Maple Mono NF", "Tilt Neon", monospace;
+  font-family: "Maple Mono NF";
+  font-size: 14.6px;
+  color: $base04;
+}
+
+.wallpaperBox {
+  background-color: $base00;
+  // padding: 5px;
+  padding: 0 5px 5px 5px;
+
+  .wallpaperImage {
+    border-radius: $outer_border-radius;
+    background-color:  $base01;
+    // background-color: #21455D;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+    // background-image: url("./img/wallpaper.png");
+    // background-image: url("./img/wizard.png");
+    // background-image: url("./Wallpapers/latenight_lake.jpg");
+    // background-image: url("./Wallpapers/zamurai.png");
+    // background-image: url("./Wallpapers/cute_cat.png");
+    background-image: url("./Wallpapers/sea2.jpg");
+
+  }
+}
+
+.icon {
+  font-family: "Symbols Nerd Font";
+  font-size: 20px;
+  min-width: 0.9em;
+  min-height: 1em;
+}
+
+tooltip {
+  font-weight: 500;
+  color: $base04;
+  background: $base01;
+  border: 3px solid $base00;
+  border-radius: 0.5rem;
+  padding: 5px 10px;
+}
+
+@import "./src/scss/topbar.scss";
+@import "./src/scss/topbar/left/time.scss";
+@import "./src/scss/topbar/center/workspaces.scss";
+@import "./src/scss/topbar/right/layout.scss";
+@import "./src/scss/topbar/right/battery.scss";
+@import "./src/scss/topbar/right/quicksettings.scss";
+@import "./src/scss/topbar/right/notifbutton.scss";
+
+@import "./src/scss/launcher.scss";
+@import "./src/scss/dashboard.scss";
+@import "./src/scss/wifi_section.scss";
+@import "./src/scss/notification.scss";
+@import "./src/scss/osd.scss";
+@import "./src/scss/calendar.scss";
+@import "./src/scss/powermenu.scss";
+@import "./src/scss/windowSwitcher.scss";
+@import "./src/scss/jqmenu.scss";

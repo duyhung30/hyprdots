@@ -1,0 +1,31 @@
+(include "./src/yuck/dashboard_right/top_section.yuck")
+(include "./src/yuck/dashboard_right/mid_section.yuck")
+(include "./src/yuck/dashboard_right/bot_section.yuck")
+(include "./src/yuck/dashboard_right/wifi_section.yuck")
+
+(defwindow dashboardWindow_right
+  :geometry (geometry
+    :x "0.5%"
+    :y "1%"
+    :width "20%"
+    :anchor "top right"
+  )
+  :monitor 0
+  :stacking "fg"
+  :windowtype "dock"
+  
+  (eventbox
+    :onhoverlost "eww open dashboardWindow_right --toggle"
+    (box
+      :class "dashboard"
+      :orientation "v"
+      :space-evenly false
+      :spacing 15
+      (aboutme)
+      (quick_buttons)
+      (quick_sliders)
+      (media_player)
+      (quick_info)
+    )
+  )
+)

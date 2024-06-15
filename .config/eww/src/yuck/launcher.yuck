@@ -1,0 +1,121 @@
+(defwindow launcher
+  :monitor 0
+  :stacking "fg"
+  :windowtype "dialog"
+  :focusable true
+  :geometry (geometry
+    :x "-11px"
+    :y "0px"
+    :width "27%"
+    :height "50%"
+    :anchor "center"
+  )
+  (eventbox
+    :onhoverlost "${EWW_CMD} close launcher"
+    :cursor "default"
+    
+    (box
+      :space-evenly false
+      :orientation "v"
+      :class "launcherBox"
+      :spacing 20
+      
+      (box
+        :space-evenly false
+        :class "launcherInputBox"
+        
+        (label
+          :text "󰜬"
+          :class "icon"
+        )
+        
+        (input
+          :class "launcherInput"
+          :onchange "./scripts/apps.py --query '{}' &"
+          :onaccept "gtk-launch ${arraylength(apps.math) > 0 ? apps.math[0].desktop : arraylength(apps.preferred) > 0 ? apps.preferred[0] : arraylength(apps.apps) > 0 ? apps.apps[0] : '--version' } & ${EWW_CMD} close launcher"
+          :hexpand true
+        )
+      )
+      
+      (scroll
+        :vscroll true
+        :vexpand true
+        :hexpand true
+        (box
+          :space-evenly false
+          :orientation "v"
+          :spacing 20
+          
+          (box
+            :visible {apps.math[0]}
+            
+            (app_entry
+              :icon {apps.math[1].icon}
+              :name {apps.math[1].name}
+              :desc {apps.math[1].comment}
+              :desktop {apps.math[1].desktop}
+            )
+        )
+          
+          (for app in {apps.preferred}
+            (app_entry
+              :icon {app.icon}
+              :name {app.name}
+              :desc {app.comment}
+              :desktop {app.desktop}
+            )
+          )
+          
+          (for app in {apps.apps}
+            (app_entry
+              :icon {app.icon}
+              :name {app.name}
+              :desc {app.comment}
+              :desktop {app.desktop}
+            )
+          )
+        )
+      )
+    )
+  )
+)
+
+(defwidget app_entry [?icon name desc desktop]
+  (eventbox
+    :class "appEntryEventBox"
+    :onclick "gtk-launch ${desktop} & ${EWW_CMD} close launcher --toggle"
+    :cursor "pointer"
+    (box
+      :space-evenly false
+      :class "appEntryBox"
+      :spacing 15
+      (image
+        :path icon
+        :image-width 55
+        :image-height 55
+      )
+      (box
+        :orientation "v"
+        :space-evenly false
+        
+        (label
+          :text name
+          :class "appName"
+          :valign "center"
+          :halign "start"
+          :xalign 0
+        )
+        (label
+          :text desc
+          :class "appDesc"
+          :valign "center"
+          :halign "start"
+          :xalign 0
+          :wrap true
+          :limit-width 50
+          :visible {name != desc && "null" != desc   }
+        )
+      )
+    )
+  )
+)

@@ -1,0 +1,20 @@
+(defwidget layout_widget []
+  
+  (eventbox
+    :cursor "pointer"
+    :onclick "eww open launcher --toggle"
+    (box
+      :class "layoutBox"
+      :space-evenly false
+      (image
+        ;; :path "./img/layouts/tile.png"
+        ;; :image-width 20
+        ;; :image-height 20
+        :path "./img/layouts/rustacean-flat-happy.png"
+        :image-width 40
+        :image-height 40
+      )
+    )
+  )
+  
+)

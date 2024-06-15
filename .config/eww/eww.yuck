@@ -1,0 +1,186 @@
+; ; ; ; Topbar Yuck ; ; ; ;
+(include "./src/yuck/topbar.yuck")
+(include "./src/yuck/notification.yuck")
+(include "./src/yuck/dashboard.yuck")
+(include "./src/yuck/wallpaper.yuck")
+(include "./src/yuck/calendar.yuck")
+(include "./src/yuck/osd.yuck")
+(include "./src/yuck/launcher.yuck")
+(include "./src/yuck/powermenu.yuck")
+(include "./src/yuck/windowSwitcher.yuck")
+
+; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ;
+;                Variables Section                  ;
+; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ;
+
+
+; ; Workspaces, Windows and layout
+;; (deflisten workspaces :initial "{}" "./scripts/bspwm_getWorkspace")
+;; (deflisten windows :initial "[]" "./scripts/bspwm_getWindows.py &")
+
+(defvar windows_revealer false)
+(deflisten windows :initial '[]' "./scripts/python/hypr_getWindows.py")
+(deflisten workspaces :initial "{}" "./scripts/hypr_getWorkspace")
+
+;; (deflisten workspaces :initial '[
+;;   {"id": 1, "state": "activeWorkspace"},
+;;   {"id": 2, "state": "emptyWorkspace"},
+;;   {"id": 3, "state": "emptyWorkspace"},
+;;   {"id": 4, "state": "emptyWorkspace"},
+;;   {"id": 5, "state": "emptyWorkspace"},
+;;   {"id": 6, "state": "emptyWorkspace"}
+;;   ]'
+;;   "./scripts/python/hypr_getWorkspace.py"
+;; )
+
+;; (defpoll layout :initial "./img/layouts/tile.png" :interval "0.5s" "./scripts/bspwm_getLayout --icon")
+(defvar tray_icon "")
+
+
+(defvar jqMenu_cursorPos '{"x": 0, "y": 60}')
+(defvar jqMenu_Visible false)
+(defvar jqMenu_Selected 0)
+
+; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ;
+;                Dashboard Variables                ;
+; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ;
+
+
+; ; ; AbotMe section
+(defpoll uptimeH :interval "59m" "./scripts/stats --uptimeH")
+(defpoll uptimeM :interval "1m" "./scripts/stats --uptimeM")
+(defpoll user :interval "24h" "./scripts/stats --user")
+(defpoll host :interval "24h" "./scripts/stats --host")
+
+; ; ; ; Quick settings variables
+
+; ; Volume, Brightness, Microphone variables 
+(deflisten volume :initial '{"icon": "", "value": "50" }' "./scripts/volume --get")
+(deflisten brightness :initial '{"icon": "󰃠", "value": "100"}' "./scripts/brightness --get")
+(deflisten microphone :initial '{"icon": "", "value": "100"}' "./scripts/microphone --get")
+(defvar microphone_revealer false)
+(deflisten battery :initial '{"state": "Discharging", "percentage": "100", "icon": "󰁹"}' "./scripts/battery")
+(defpoll battery_icon :interval "1s" "~/.config/eww/scripts/battery --icon")
+(defvar battery_charging "")
+(defpoll battery_percentage :interval "1s" "~/.config/eww/scripts/battery --percent")   
+(defpoll battery_status  :interval "1s" "~/.config/eww/scripts/battery --state")
+(defpoll battery_iterator :interval "0s" "~/.config/eww/scripts/battery --anim")
+; Notifications
+(deflisten  notifications :initial '{
+    "count": 0,
+    "dnd": false,
+    "notifications": [],
+    "popups": []
+    }'
+    "./scripts/notifCatch"
+)
+
+; ToDo list
+(defvar taskList "[]")
+(defvar taskTitle "")
+(defvar taskBody "")
+
+(defvar osd '{ "icon": "", "value": 50, "valueType": "int" }')
+
+; Wi-Fi
+(deflisten wifiList :initial "{}" "./scripts/wifi --scan")
+(defvar wifiSelectedSSID "None")
+(defvar wifiSelectedPASS "None")
+(defvar wifiPassVisible true)
+(defpoll wifiInfo :interval "5s" :initial '{
+  "status":"disconnected",
+  "name":"Wi-Fi",
+  "icon":"󰤮"
+  }'
+  "./scripts/wifi --info"
+)
+
+
+
+(defpoll ipInfo :interval "5s" :initial '{
+  "text": "Disconnected",
+  "tooltip": "VPN Status: Disconnected",
+  "IP": "192.168.0.6"
+  }'
+  "./scripts/local_ip"
+)
+
+; (defpoll btInfo :interval "1m" :initial '{"status":"disconnected","name":"Bluetooth","icon":"󰂲"}' "./scripts/bluetooth --info" )
+(defvar btInfo '{"status":"disconnected","name":"Bluetooth","icon":"󰂲"}')
+
+; AirplaneMode
+(defvar airplaneMode false)
+
+; Apps json variable
+(deflisten apps :initial '{"math": [False], "apps": {}, "preferred": {}}' "./scripts/apps.py" )
+
+; Playerctl main variables
+
+(deflisten playerctlStatus :initial false "playerctl --follow status")
+(deflisten playerctlShuffle :initial "Off" "playerctl --follow shuffle")
+(deflisten playerctlLoop :initial "Off" "playerctl --follow loop")
+(defvar media_playerHover false)
+(defpoll playerctlCTime
+  :initial 0
+  :interval "1s"
+  :run-while '{
+  playerctl.status == "Playing" &&
+  playerctl.length > 0
+  }'
+  "playerctl position"
+)
+
+(deflisten playerctl :initial '{
+  "source": "",
+  "shuffle": "",
+  "loop": "",
+  "status": "",
+  "length":"",
+  "artist":"",
+  "title":"",
+  "artUrl":""
+  }'
+  "./scripts/media"
+)
+
+(deflisten song :runwhile revealmpd "./scripts/music_info --song")
+(deflisten artist :runwhile revealmpd "./scripts/music_info --artist")
+(defpoll current :interval "1s" :runwhile revealmpd "./scripts/music_info --time")
+(defpoll ctime :interval "1s" :runwhile revealmpd "./scripts/music_info --ctime")
+(defpoll ttime :interval "1s" :runwhile revealmpd "./scripts/music_info --ttime")
+(deflisten cover :runwhile revealmpd "./scripts/music_info --cover")
+(deflisten status :runwhile revealmpd "./scripts/music_info --status")
+(deflisten mpdvol :runwhile revealmpd "./scripts/music_info --volume")
+(deflisten mpdsingle :runwhile revealmpd "./scripts/music_info --single")
+(deflisten mpdrandom :runwhile revealmpd "./scripts/music_info --random")
+
+;; playerctl
+(deflisten psong :runwhile {!revealmpd} "playerctl metadata --format '{{ title }}' -F")
+(deflisten partist :runwhile {!revealmpd} "playerctl metadata --format '{{ artist }}' -F")
+(deflisten pcover :runwhile {!revealmpd} "./scripts/pollcover.sh")
+(deflisten pstatus :runwhile {!revealmpd} "playerctl status -F")
+
+(defvar reveal1 false)
+(defvar reveal2 false)
+(defvar reveal3 false)
+(defvar reveal4 false)
+(defvar reveal5 false)
+(defvar reveal6 false)
+(defvar revealweather false)
+(defvar revealmpd false)
+(defvar revealcontrolpanel false)
+
+; Calendar variables
+(defpoll weather
+  :interval "30s"
+  :initial '{
+  "icon": "󰖐",
+  "description": "Weather Unavailable",
+  "temperature": "-",
+  "quoteOne": "Ah well, no weather huh?",
+  "quoteTwo": "Even if there\'s no weather, it\'s gonna be a great day!",
+  "hex": "#adadff"
+  }'
+  "./scripts/weather"
+)
+

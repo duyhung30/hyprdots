@@ -1,0 +1,162 @@
+(defwindow notifpopup
+  :monitor 0
+  :stacking "fg"
+  :windowtype "dock"
+  :geometry (geometry
+    :x "21px"
+    :y "60px"
+    :width "0%"
+    :height "0%"
+    :anchor "top center"
+  )
+  
+  (eventbox
+    :onhoverlost "eww close notifpopup"
+    
+    (scroll
+      :vscroll true
+      :width 350
+      :height 500
+      (box
+        :space-evenly false
+        :spacing 10
+        :orientation "v"
+        :hexpand true
+        :vexpand true
+        (for notif in {notifications.popups}
+          (notifpopup
+            :id {notif.id}
+            :source {notif.app}
+            :title {notif.summary}
+            :content {notif.body}
+            :imgPath {notif.image}
+            :time {notif.time}
+          )
+        )
+      )
+    )
+  )
+)
+
+; We create the widget that contains the info of the notif, at the moment image display is not supported bc idk how to do it xd
+(defwidget notifpopup [id source title content ?time ?onClose ?onClose2 ?imgPath ?actions]
+  (eventbox
+    :onclick "./scripts/notifManage --dismiss ${id} &"
+    :onrightclick "./scripts/notifManage --close ${id} &"
+    
+    :cursor "pointer"
+    
+    (box
+      :orientation "v"
+      :class "notifBox ${source} Box_${source}"
+      :space-evenly false
+      :spacing 10
+      ; "Titlebar" of the popup
+      (centerbox
+        (label
+          :text {
+          source == "flameshot" || source == "Screenshot"  ? "󰲍" :
+          source == "discord" || source == "VencordDesktop" ? "󰙯":
+          source == "Firefox" ? "󰈹" :
+          source == "Spotify" ? "" : "󰵅"
+          }
+          :class "icon titlebar ${source}"
+          :halign "start"
+        )
+        
+        ; "LabelTitlebar" of the popup
+        (label
+          :text {
+          source == "discord" || source == "VencordDesktop" ? "Discord":
+          source == "flameshot" ? "Screenshot" :
+          source == "Spotify" ? "Spotify" : source
+          }
+          :class "titlebar"
+        )
+        
+        (button
+          :class "eventbox icon"
+          :onclick onClose2
+          :halign "end"
+          (label
+            :text time
+            :class "titlebar closebutton"
+          )
+        )
+        
+        
+      )
+      ; ; Body of the notification
+      (box
+        :space-evenly false
+        :spacing 10
+        :orientation  {source == "Screenshot" ? "v" :"h"}
+        :halign {source != "Screenshot" && imgPath != "null" ? "start" :"center"}
+        
+        (box
+          :visible {source != "Screenshot" && imgPath != "null"}
+          :class "smallImage"
+          :style "background-image: url(\"${imgPath}\");"
+        )
+        
+        (box
+          :orientation "v"
+          :space-evenly false
+          :valign "center"
+          :halign "center"
+          :hexpand true
+          :visible {source != "Screenshot"}
+          
+          (label
+            :text title
+            :tooltip title
+            :class "title"
+            :halign {strlength(title) < 20  ? "center" : "start"}
+            :valign "start"
+            :limit-width 20
+            :xalign {strlength(content) < 25 ? 0.5 : 0}
+          )
+          
+          (label
+            :text content
+            :tooltip content
+            :halign {strlength(content) < 25 ? "center" : "start"}
+            :valign "start"
+            :class "content"
+            :limit-width 30
+            :wrap true
+            :xalign {strlength(content) < 15 ? 0.5 : 0}
+          )
+        )
+        (box
+          :orientation "v"
+          :visible {source == "Screenshot" && imgPath != "null"}
+          :space-evenly false
+          :spacing 10
+          
+          (box
+            :class "bigImage"
+            :style "background-image: url(\"${imgPath}\");"
+            :hexpand true
+          )
+          
+          (box
+            :space-evenly false
+            :spacing 10
+            :halign "center"
+            (button
+              :class "button"
+              :onclick "imv ${imgPath} &"
+              (label :text "Open")
+            )
+            (button
+              :class "button"
+              :onclick "rm ${imgPath} & ./scripts/notifManage --close ${id} &"
+              (label :text "Delete")
+            )
+          )
+        )
+      )
+    )
+  )
+)

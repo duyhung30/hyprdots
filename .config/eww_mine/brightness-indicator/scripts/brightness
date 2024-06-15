@@ -1,0 +1,30 @@
+#!/bin/bash
+
+brightness=$(brightnessctl get)
+prev_brightness=$brightness
+
+while :
+do
+    sleep 0.1
+
+    brightness=$(brightnessctl get)
+    if [ "$brightness" != "$prev_brightness" ]
+    then
+        # Звук изменился, выполняем команду для скрытия индикатора звука
+        eww update brightness-hidden='true' -c ~/.config/eww/brightness-indicator
+        prev_brightness=$brightness
+        sleep 1
+
+        # Проверяем, как долго идет изменение звука
+        new_brightness=$(brightnessctl get)
+        if [ "$new_brightness" != "$prev_brightness" ]
+        then
+            # Изменение звука продолжается, ничего не делаем
+            continue
+        else
+            # Изменение звука прекратилось, выполняем команду для отображения индикатора звука
+            eww update brightness-hidden='false' -c ~/.config/eww/brightness-indicator
+            prev_brightness=$brightness
+        fi
+    fi
+done

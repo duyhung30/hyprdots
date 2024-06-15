@@ -1,0 +1,49 @@
+theme = "rose_pine"
+#theme = "kanagawa"
+
+[editor]
+line-number = "relative"
+true-color = true
+cursorline = true
+color-modes = true
+auto-pairs = true
+auto-format = true
+bufferline = "multiple"
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[keys.insert]
+j = { j = "normal_mode" } # Maps jk to exit insert mode
+# s = { s = ":vsplit"}
+#h = { h = ":hsplit"}
+ 
+[keys.normal]
+tab = "goto_next_buffer"
+C-v = "vsplit"
+
+[keys.normal.g]
+q = ":bc"
+Q = ":bc!"
+c = "toggle_comments"
+
+[editor.indent-guides]
+render = true
+character = "╎" # Some characters that work well: "▏", "┆", "┊", "⸽"
+skip-levels = 1
+
+[editor.lsp]
+display-messages = true
+display-inlay-hints = true
+auto-signature-help	= true
+display-signature-help-docs	= true
+
+[editor.statusline]
+left = ["mode", "spinner", "file-name", "file-type", "total-line-numbers", "file-encoding"]
+center = []
+right = ["selections", "primary-selection-length", "position", "position-percentage", "spacer", "diagnostics", "workspace-diagnostics", "version-control"]
+#mode.normal = "NORMAL"
+#mode.insert = "INSERT"
+#mode.select = "SELECT"
