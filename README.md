@@ -6,5 +6,5 @@
 4. neovim (or helix)
 5. alacritty, wezterm or foot
 6. [starship prompt](https://starship.rs/)
-7. [rofi](https://github.com/davatorium/rofi)or wofi
+7. [rofi](https://github.com/davatorium/rofi) or wofi
 8. [fcitx5](https://github.com/fcitx/fcitx5) (a generic input method framework)
